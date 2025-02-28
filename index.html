@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днём Святого Валентина!</title>
+    <style>
+        /* Общие стили */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Фон с фото и текстом */
+        .fullscreen {
+            background-image: url('https://sunmag.me/wp-content/uploads/2024/02/sunmag-1-transformaciya-rolej-v-sovremennyh-otnosheniyah.jpg'); /* Замени на своё фото */
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            position: relative;
+        }
+
+        .fullscreen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Затемнение фона */
+        }
+
+        .text-overlay {
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #d32f2f;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #b71c1c;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 90%;
+            width: 100%;
+            max-height: 50vh; /* Ограничиваем высоту, чтобы текст был виден наполовину */
+            overflow-y: auto;
+            animation: fadeIn 0.5s ease;
+            color: #333;
+            position: relative;
+        }
+
+        .heart {
+            font-size: 50px;
+            color: #d32f2f;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-text {
+            font-size: 18px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #d32f2f;
+        }
+
+        /* Анимация сердец */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2000;
+        }
+
+        .heart-animation {
+            position: absolute;
+            font-size: 30px;
+            color: #d32f2f;
+            animation: float 2s ease-out forwards; /* Убираем infinite, чтобы сердца исчезали */
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Главный экран с фото и текстом -->
+    <div class="fullscreen">
+        <div class="text-overlay">
+            <h1>Ты меня любишь больше чем друга?</h1>
+            <div class="buttons">
+                <button id="yesButton">ДА</button>
+                <button id="noButton">НЕТ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для "ДА" -->
+    <div id="yesModal" class="modal">
+        <div class="modal-content">
+            <span class="heart">❤️</span>
+            <div id="yesText" class="modal-text"> 
+                <p>Поздравляю тебя, Марфа с 14 февраля!</p>
+                Ты даже не представляешь, как сильно я сейчас счастлив.<br>
+                Кажется, сердце вот-вот выскочит из груди, а мысли скачут так быстро, что я с трудом подбираю слова.<br>
+                Но я точно знаю одно: этот момент самый лучший для меня за всю жизнь.<br>
+                Я так долго ждал, так много раз прокручивал в голове разные варианты, что, если ты откажешься, но сейчас всё хорошо.<br><br>
+                Ты — самое прекрасное, что случилось в моей жизни. Ты умная, добрая, красивая, и я не могу представить свою жизнь без тебя.<br>
+                Ты вдохновляешь меня каждый день, и я хочу быть с тобой всегда.<br>
+                Я люблю тебя больше, чем слова могут выразить. ❤️
+            </div>
+            <button class="modal-close" onclick="closeModal('yesModal')">×</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно для "НЕТ" -->
+    <div id="noModal" class="modal">
+        <div class="modal-content">
+            <p class="modal-text">
+                Очень жаль, но я всё равно буду тебя любить. ❤️
+            </p>
+            <button class="modal-close" onclick="closeModal('noModal')">×</button>
+        </div>
+    </div>
+
+    <!-- Контейнер для сердец -->
+    <div id="hearts" class="hearts"></div>
+
+    <script>
+        // Открытие модального окна для "ДА"
+        document.getElementById('yesButton').addEventListener('click', function() {
+            document.getElementById('yesModal').style.display = 'flex';
+            setupScrollListener('yesModal');
+        });
+
+        // Открытие модального окна для "НЕТ"
+        document.getElementById('noButton').addEventListener('click', function() {
+            document.getElementById('noModal').style.display = 'flex';
+        });
+
+        // Закрытие модального окна
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Настройка отслеживания скролла
+        function setupScrollListener(modalId) {
+            const modalContent = document.querySelector(`#${modalId} .modal-content`);
+            modalContent.addEventListener('scroll', function() {
+                if (modalContent.scrollTop + modalContent.clientHeight >= modalContent.scrollHeight) {
+                    // Если текст полностью прокручен, запускаем анимацию сердец
+                    startHearts();
+                }
+            });
+        }
+
+        // Анимация сердец (салют)
+        function startHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const numHearts = 50; // Количество сердец
+
+            for (let i = 0; i < numHearts; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-animation');
+                heart.innerHTML = '❤️';
+
+                // Позиционируем сердца в случайных местах по всему экрану
+                const startX = Math.random() * 100; // Случайная позиция по горизонтали
+                const startY = Math.random() * 100; // Случайная позиция по вертикали
+                heart.style.left = `${startX}%`;
+                heart.style.top = `${startY}%`;
+
+                heartsContainer.appendChild(heart);
+
+                // Удаление сердца после завершения анимации
+                heart.addEventListener('animationend', () => {
+                    heart.remove();
+                });
+            }
+        }
+    </script>
+</body>
+</html>
