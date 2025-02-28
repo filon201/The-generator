@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор комплиментов для Марфы</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+        }
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        .compliment {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            font-family: 'Pacifico', cursive;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        .compliment.show {
+            opacity: 1;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 50px;
+            background: #ff6f61;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+        button:hover {
+            background: #ff4a3d;
+            transform: scale(1.05);
+        }
+
+        /* Адаптация для телефонов */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .compliment {
+                font-size: 1rem;
+            }
+            button {
+                font-size: 0.9rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Марфины улыбки</h1>
+        <div class="compliment" id="compliment">Нажми на кнопку, Марфа!</div>
+        <button onclick="generateCompliment()">Порадуй меня</button>
+    </div>
+
+    <script>
+        const beginnings = [
+            "Марфа, ты — ",
+            "Марфа, твоя улыбка — ",
+            "Марфа, ты выглядишь как ",
+            "Марфа, ты — воплощение ",
+            "Марфа, ты — мой источник ",
+            "Марфа, ты — самое ",
+            "Марфа, ты — это ",
+            "Марфа, ты — настоящая ",
+            "Марфа, ты — моя ",
+            "Марфа, ты — просто "
+        ];
+
+        const middles = [
+            "невероятное чудо",
+            "самое красивое, что я видел",
+            "вдохновение для всех вокруг",
+            "лучшее, что случалось со мной",
+            "сияние, которое освещает мой день",
+            "доброта и нежность в одном лице",
+            "мечта, ставшая реальностью",
+            "источник радости и счастья",
+            "удивительное сочетание красоты и ума",
+            "нечто прекрасное, что нельзя описать словами"
+        ];
+
+        const endings = [
+            "!",
+            "! Ты просто невероятна!",
+            ", и я счастлив, что ты есть в моей жизни.",
+            ", и я не могу перестать улыбаться, думая о тебе.",
+            ", и я благодарен за каждый момент с тобой.",
+            ", и ты делаешь этот мир лучше.",
+            ", и я не могу представить свою жизнь без тебя.",
+            ", и ты — моя вселенная.",
+            ", и я обожаю каждую секунду рядом с тобой.",
+            ", и ты — мой самый дорогой человек."
+        ];
+
+        const complimentElement = document.getElementById('compliment');
+
+        function generateCompliment() {
+            const randomBeginning = beginnings[Math.floor(Math.random() * beginnings.length)];
+            const randomMiddle = middles[Math.floor(Math.random() * middles.length)];
+            const randomEnding = endings[Math.floor(Math.random() * endings.length)];
+
+            const compliment = randomBeginning + randomMiddle + randomEnding;
+            complimentElement.textContent = compliment;
+            complimentElement.classList.add('show');
+            setTimeout(() => {
+                complimentElement.classList.remove('show');
+            }, 7000); // Комплимент исчезает через 5 секунд
+        }
+    </script>
+</body>
+</html>
